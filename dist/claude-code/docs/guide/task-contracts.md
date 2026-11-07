@@ -54,26 +54,17 @@ working directory, prerequisites, and fit to the repository.
 
 ## Report readiness
 
-Readiness is an assessment made during the run. It is not a form-enforced status,
-label, or automatic state transition.
+Follow [task readiness and acceptance](../core.md#task-readiness-and-acceptance)
+after sufficient inspection and before dependent implementation. `/poteto-mode`
+applies this gate to issues, specs, and conversations; the form itself does not
+enforce it. Discovery and reproduction can run first.
 
-| Assessment      | Meaning                                              | Next action                                               |
-|-----------------|------------------------------------------------------|-----------------------------------------------------------|
-| READY           | Scope and outcomes are clear; required checks can run | Implement within scope, then execute the agreed checks     |
-| NEEDS_DISCOVERY | Verification commands or fixtures are unknown        | Inspect project tooling; resolve the verification plan     |
-| BLOCKED         | A required decision, access, or capability is missing | Name the blocker, its impact, and a remedy; do not claim done |
-
-For `NEEDS_DISCOVERY`, inspect manifests, existing tests, CI, scripts, and project
-docs. Report exact commands, their working directories, prerequisites, and
-expected results in the chat. Run a safe focused baseline when possible. If the
-runner is absent or the check cannot be executed, report `BLOCKED` with a remedy.
-Do not silently substitute a syntax check for required runtime proof.
-
-An unresolved question may be non-blocking if it does not change the agreed
-behavior or scope. Record the assumption and its limits. A decision affecting
-acceptance criteria, permissions, destructive actions, or required verification
-blocks implementation until resolved. Reassess readiness after discovery or an
-issue revision; do not treat a completed form as proof.
+Unknown commands or fixtures are routine discovery, not a reason to request
+approval. A clear task reports `READY` and proceeds. A behavior or scope decision
+reports `NEEDS CLARIFICATION`; unavailable required proof reports `BLOCKED`.
+Resolve each impediment and recheck before its dependent work continues. An issue
+revision or material environment change invalidates affected readiness/evidence.
+These are run assessments, not automatic GitHub labels or issue edits.
 
 ## Return evidence
 
@@ -82,9 +73,17 @@ revision and relevant environment, expected result, actual result, exit code,
 and evidence location. Redact sensitive output. Separate executed checks from
 static analysis, skipped checks, and unknowns.
 
-Report `PASS`, `ISSUES`, or `BLOCKED` using the shared output contract. A passing
-build alone does not establish every acceptance criterion. Return evidence in
-the chat unless posting an issue comment or opening a PR is separately authorized.
+Map every criterion to `PASS`, `FAIL`, or `NOT VERIFIED` using the shared policy.
+Then report the overall outcome; required failures or missing proof prevent a
+completion claim. A passing build alone does not establish every criterion.
+Return evidence in the chat unless posting an issue comment or opening a PR is
+separately authorized.
+
+## Exercise the gates in a host
+
+Use the [isolated scenario procedure](../validation.md#task-contract-scenarios)
+to test actions and ordering, not just the assessment text. Static packaging
+checks do not prove that a host agent follows the gate.
 
 ## Validate changes
 
