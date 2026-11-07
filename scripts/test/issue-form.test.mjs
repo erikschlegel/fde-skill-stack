@@ -6,17 +6,20 @@ import { validateIssueForm } from "../lib/issue-form.mjs";
 
 const source = readFileSync(new URL("../../.github/ISSUE_TEMPLATE/task-contract.yml", import.meta.url), "utf8");
 
-test("task contract accepts command discovery and exposes editable Markdown answer fields", () => {
+test("task contract has four outcome fields and requires only the first three", () => {
   const form = validateIssueForm(source);
   const fields = form.body.filter(item => item.type !== "markdown");
-  assert.deepEqual(fields.filter(item => item.validations?.required).map(item => item.id), [
-    "goal", "scope", "acceptance-criteria", "verification-scenarios", "verification-commands",
-    "command-readiness", "evidence-requirements", "unresolved-decisions",
+  assert.deepEqual(fields.map(item => [item.type, item.attributes.label, item.validations?.required === true]), [
+    ["textarea", "Goal", true],
+    ["textarea", "Scope and constraints", true],
+    ["textarea", "Acceptance checks", true],
+    ["textarea", "Context and open questions", false],
   ]);
-  const commands = fields.find(item => item.id === "verification-commands");
-  commands.attributes.value = "UNKNOWN: discover the project's focused test command.";
-  assert.equal(validateIssueForm(stringify(form)).body.find(item => item.id === commands.id).attributes.value,
-    commands.attributes.value);
+  assert.equal(form.body[0].attributes.value.trim(),
+    "Describe outcomes, not implementation steps. Leave unknown tooling for the agent to discover.");
+  for (const item of fields) {
+    assert.doesNotMatch(`${item.attributes.description}\n${item.attributes.placeholder}`, /command|readiness|working director|exit code/i);
+  }
 });
 
 test("issue form validation rejects malformed YAML and unusable field definitions", () => {
@@ -36,7 +39,9 @@ test("issue form validation rejects ambiguous answers and invalid dropdown defau
   for (const [mutate, error] of [
     [form => { form.body[2].id = form.body[1].id; }, /Duplicate issue form id/],
     [form => { form.body[2].attributes.label = form.body[1].attributes.label; }, /Duplicate issue form label/],
-    [form => { form.body.find(item => item.type === "dropdown").attributes.default = 2; }, /Dropdown default/],
+    [form => { form.body.push({
+      type: "dropdown", id: "example", attributes: { label: "Example", options: ["One", "Two"], default: 2 },
+    }); }, /Dropdown default/],
     [form => { form.body = [form.body[0], form.body[0]]; }, /must contain an input/],
   ]) {
     const form = validateIssueForm(source);

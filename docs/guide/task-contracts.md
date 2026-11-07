@@ -11,15 +11,15 @@ To use it in another repository, copy the form into that repository's
 `.github/ISSUE_TEMPLATE/` directory. Installing pstack does not install issue
 templates into your project.
 
-The form collects a goal, in-scope work and non-goals, observable acceptance
-criteria, verification scenarios, commands, evidence requirements, and unresolved
-decisions. Give each criterion an ID, such as `AC1`, and use that ID in the
-scenarios and evidence. State thresholds and expected output shapes when they
-matter. Placeholders are examples, not submitted answers.
+The form has four fields: Goal, Scope and constraints, Acceptance checks, and
+Context and open questions. Only the first three are required. Describe the
+outcome, included and excluded work, preserved behavior, and observable pass/fail
+results. Include specific proof when it matters; references, reproduction steps,
+and unresolved decisions belong in the optional context field.
 
-Unknown commands are valid planning input. Enter `UNKNOWN` and the question to
-investigate, then select **Discovery needed**. Do not guess a runner or copy
-this plugin's commands into a project with different tooling.
+Leave unknown tooling for the agent to discover. You do not need to know test
+commands or assess readiness to submit a task. Placeholders are examples, not
+submitted answers.
 
 GitHub converts answers to an editable Markdown issue body. Required fields
 check submission completeness, not task quality. The form does not invoke pstack,
@@ -35,8 +35,8 @@ URL. Use your client's slash-menu spelling, such as `/poteto-mode` or
 ```text
 /pstack:poteto-mode work from <full issue URL> in this checkout. Read the current
 issue body, restate the goal, scope, acceptance criteria, and open decisions.
-Report readiness before changing behavior. Discover UNKNOWN verification
-commands from repository tooling, then map checks and evidence to each criterion.
+Report readiness before changing behavior. Discover verification tooling from
+the repository, then map checks and evidence to each acceptance check.
 Do not commit, push, open a PR, deploy, or post issue comments.
 ```
 
@@ -73,7 +73,7 @@ An unresolved question may be non-blocking if it does not change the agreed
 behavior or scope. Record the assumption and its limits. A decision affecting
 acceptance criteria, permissions, destructive actions, or required verification
 blocks implementation until resolved. Reassess readiness after discovery or an
-issue revision; do not treat the author's dropdown selection as proof.
+issue revision; do not treat a completed form as proof.
 
 ## Return evidence
 
