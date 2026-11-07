@@ -21,6 +21,9 @@ Here's what you'll learn:
 
 Read the pages in order the first time. After that, each page stands alone.
 
+For issue-based work, [GitHub task contracts](./task-contracts.md) covers the
+issue form, unknown-command discovery, readiness assessment, and required evidence.
+
 When you're stuck, or can't tell which skill fits, type [`/poteto-help`](../../skills/poteto-help/SKILL.md) with your question:
 
 ```text

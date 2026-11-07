@@ -153,7 +153,7 @@ test("generator check rejects drift without overwriting output", async t => {
   assert.equal(check.status, 0, check.stderr);
   const f = await fixture(t);
   await mkdir(join(f.repo, "scripts/lib"), { recursive: true });
-  for (const path of ["skills", "docs", "assets", "automations", "config", "README.md", "LICENSE", "plugin.json",
+  for (const path of ["skills", "docs", "assets", "automations", "config", ".github/ISSUE_TEMPLATE", "README.md", "LICENSE", "plugin.json",
     "scripts/generate-pstack-harness-trees.mjs", "scripts/pstack-config.mjs", "scripts/lib/pstack-config.mjs", "scripts/lib/model-agents.mjs"]) {
     await cp(join(root, path), join(f.repo, path), { recursive: true, filter: path => !path.split("/").includes("node_modules") });
   }
