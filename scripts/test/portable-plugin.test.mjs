@@ -58,6 +58,20 @@ test("generated agents restrict readers through tools and disclose harness diffe
   assert.match(text("docs/harness/copilot-cli.md"), /native `task`/);
 });
 
+test("task readiness routing resolves to the same shared gate in every distribution", () => {
+  const gate = text("docs/core.md").split("## Task readiness and acceptance\n")[1]?.split("\n## Model routing")[0];
+  assert.ok(gate, "shared readiness gate must exist");
+  for (const base of ["", "dist/cursor/", "dist/claude-code/"]) {
+    const skill = text(`${base}skills/poteto-mode/SKILL.md`);
+    assert.match(skill, /\]\(\.\.\/\.\.\/docs\/core\.md#task-readiness-and-acceptance\)/);
+    const packagedGate = text(`${base}docs/core.md`).split("## Task readiness and acceptance\n")[1]?.split("\n## Model routing")[0];
+    assert.equal(packagedGate, gate);
+    const guide = text(`${base}docs/guide/task-contracts.md`);
+    assert.match(guide, /\]\(\.\.\/core\.md#task-readiness-and-acceptance\)/);
+    assert.doesNotMatch(guide, /NEEDS_DISCOVERY/);
+  }
+});
+
 test("how handles a small trace directly; review resolves two bounded families without model calls", async t => {
   const f = await fixture(t);
   const config = await loadConfig(f);

@@ -37,6 +37,49 @@ make paid calls without the user's authorization for that action. A generic
 autonomy grant does not authorize unrelated external writes. Do not reset,
 discard, or overwrite another contributor's work.
 
+## Task readiness and acceptance
+
+Use the current issue, referenced spec, or conversation as task data. After enough
+repository inspection, but before dependent implementation, identify the goal,
+scope and constraints, observable acceptance criteria, and required proof.
+Discovery and bug reproduction may proceed before this gate. Keep small tasks
+to a brief assessment; for read-only work, gate the dependent conclusion rather
+than imposing an implementation ceremony.
+
+Discover missing commands, fixtures, and prerequisites from manifests, tests,
+CI, scripts, and docs. Resolve routine engineering gaps within the agreed scope
+autonomously. Do not require the developer to supply test commands, score the
+contract, invent scope-affecting criteria, or silently change agreed intent.
+
+Report the assessment with the affected criteria and next action:
+
+* `READY`: Intent and acceptance are clear and required verification is feasible.
+  State the verification plan and proceed without extra approval, within existing
+  permissions and action gates.
+* `NEEDS CLARIFICATION`: Behavior is ambiguous, requirements conflict, or a missing
+  criterion changes scope or intent. Identify the specific decision and pause
+  dependent implementation until the user resolves it. Independent discovery may
+  continue; a convenient assumption is not a resolution.
+* `BLOCKED`: A required capability or prerequisite is unavailable. Name the affected
+  criteria and smallest remedy. Pause dependent implementation; weaker checks
+  cannot substitute for required proof. If the user explicitly permits an
+  unverified draft, keep it labeled as such and make no completion claim.
+
+If both a decision and a capability are missing, report both impediments; clearing
+one does not clear the other. Recheck readiness after resolving a gap and whenever
+the contract or environment materially changes, before dependent implementation
+continues. Reuse unaffected evidence, but rerun checks invalidated by the change.
+A failed acceptance check requires fixing and rerunning it, not redefining it.
+
+At delivery, map every acceptance criterion to `PASS`, `FAIL`, or `NOT VERIFIED`
+with expected and observed results and evidence (commands, working directory,
+exit codes, artifacts, and relevant revision/environment). `PASS` requires the
+specified proof; `FAIL` means executed evidence contradicts the criterion;
+`NOT VERIFIED` means required proof is absent, skipped, or invalidated.
+Required failures or missing proof prevent a completion claim, even when a build
+passes. Report remaining decisions and remedies. Issue edits, labels, comments,
+and other external writes still require authorization.
+
 ## Model routing
 
 [defaults.json](../config/defaults.json) is the single authoritative role profile.
@@ -131,6 +174,7 @@ Cursor-specific optional functionality; do not translate them into local worktre
 ## Output contracts
 
 For changes, report intent, meaningful changes, verification commands and
-results, limitations, and any remaining blocker. For investigations, separate
+results, the acceptance mapping above, limitations, and any remaining blocker.
+For investigations, separate
 observed evidence, inference, and unknowns. For workers, return `PASS`, `ISSUES`,
 or `BLOCKED` with artifacts and commands. A required missing lane is `BLOCKED`.

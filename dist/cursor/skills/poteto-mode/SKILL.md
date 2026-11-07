@@ -19,6 +19,13 @@ matching playbook. Reproduce bugs first. Use how/why for grounding, architect
 for consequential design uncertainty, and arena/interrogate for justified
 independent candidate/review work. Do not spawn agents for trivial tasks.
 
+After sufficient inspection and before dependent implementation, apply
+[task readiness and acceptance](../../docs/core.md#task-readiness-and-acceptance)
+to the current issue, spec, or conversation. Report readiness, resolve routine
+discovery gaps, and pause only the work affected by a decision or capability
+blocker. Recheck after resolved gaps or material changes. At delivery, map every
+acceptance criterion to evidence using the shared policy's statuses.
+
 Use the central implementation, exploration, architecture, explanation,
 verification, and review roles. No playbook defines model defaults. Resolve
 exact entitled identities and supported controls before delegation.
