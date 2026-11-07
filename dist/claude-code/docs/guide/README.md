@@ -22,7 +22,8 @@ Here's what you'll learn:
 Read the pages in order the first time. After that, each page stands alone.
 
 For issue-based work, [GitHub task contracts](./task-contracts.md) covers the
-issue form, unknown-command discovery, readiness assessment, and required evidence.
+four-field issue form and issue-based invocation. Readiness assessment and
+evidence reporting remain part of the agent's run, not form requirements.
 
 When you're stuck, or can't tell which skill fits, type [`/poteto-help`](../../skills/poteto-help/SKILL.md) with your question:
 
