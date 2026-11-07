@@ -1,0 +1,92 @@
+name: Task contract
+description: Define a scoped engineering task and the evidence needed to accept it.
+title: "[Task]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe the outcome and how you will verify it. Unknown commands are
+        welcome: mark them UNKNOWN and request discovery instead of guessing.
+        This form collects a plan; it does not run pstack, enforce agent behavior,
+        or authorize commits, pushes, PRs, deployments, or other external writes.
+        Do not include credentials, private logs, or customer data.
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: What should change for the user or caller, and why?
+      placeholder: Export retries must not create duplicate rows.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: Name the affected components, allowed changes, and explicit non-goals.
+      placeholder: |
+        In scope: export retry handling and its tests.
+        Out of scope: schema changes, UI redesign, and deployment.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Observable acceptance criteria
+      description: Give each criterion an ID and a measurable pass/fail result, not an implementation prescription.
+      placeholder: |
+        AC1: Retrying the same export leaves exactly one row per source record.
+        AC2: A new export still includes every source record.
+    validations:
+      required: true
+  - type: textarea
+    id: verification-scenarios
+    attributes:
+      label: Verification scenarios
+      description: Map each criterion to inputs, actions, and expected results. Include failure and boundary cases.
+      placeholder: |
+        AC1: Run the export twice with the same retry key; expect no duplicates.
+        AC2: Export an empty input and a non-empty input; compare stored row counts.
+    validations:
+      required: true
+  - type: textarea
+    id: verification-commands
+    attributes:
+      label: Verification commands
+      description: Give exact commands, working directories, prerequisites, and expected results, or mark unknown entries UNKNOWN with a discovery question.
+      placeholder: |
+        Focused tests: UNKNOWN. Find the export retry test command in project tooling.
+        Integration check: UNKNOWN. Find the fixture setup and row-count query.
+    validations:
+      required: true
+  - type: dropdown
+    id: command-readiness
+    attributes:
+      label: Command readiness
+      description: This is your assessment, not an automated readiness gate. Even known commands need a runtime preflight.
+      options:
+        - Commands are known
+        - Discovery needed
+      default: 1
+    validations:
+      required: true
+  - type: textarea
+    id: evidence-requirements
+    attributes:
+      label: Evidence requirements
+      description: Specify what evidence proves each criterion, including commands, revision, environment, actual results, and limitations.
+      placeholder: |
+        AC1: Before/after row counts and retry test output.
+        AC2: Fixture input counts and stored counts, with commands and exit codes.
+        Redact sensitive data; distinguish executed checks from static analysis.
+    validations:
+      required: true
+  - type: textarea
+    id: unresolved-decisions
+    attributes:
+      label: Unresolved decisions
+      description: List open questions, their impact, who can resolve them, and whether they block implementation. Enter None if there are none.
+      placeholder: |
+        Should retry identity expire? Maintainer decision; blocks behavior changes.
+        Which integration runner is used? Discover from repository tooling.
+    validations:
+      required: true

@@ -7,6 +7,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 import { validateConfig } from "./lib/pstack-config.mjs";
+import { validateIssueForm } from "./lib/issue-form.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const read = path => JSON.parse(readFileSync(join(ROOT, path), "utf8"));
@@ -40,6 +41,8 @@ for (const path of [".cursor-plugin/plugin.json", ".claude-plugin/plugin.json", 
 const market = read(".claude-plugin/marketplace.json");
 if (market.plugins.length !== 1 || market.plugins[0].name !== "pstack" || market.plugins[0].source !== "./") throw new Error("Marketplace must install only the root plugin");
 validateConfig(read("config/defaults.json"));
+validateIssueForm(readFileSync(join(ROOT, ".github/ISSUE_TEMPLATE/task-contract.yml"), "utf8"));
+console.log("GitHub task-contract form is valid.");
 const removed = [
   "pstack", "third_party", "advisor", "agent-compatibility", "cli-for-agent",
   "continual-learning", "create-plugin", "cursor-sdk", "cursor-team-kit",

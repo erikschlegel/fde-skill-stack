@@ -83,6 +83,11 @@ The agent says what a top professional would do that you didn't ask for, the raw
 
 ## Follow up short
 
+For work tracked in GitHub, use a [task-contract issue](./task-contracts.md)
+to capture scope, checkable outcomes, verification scenarios, and evidence.
+Invoke the skill with the full issue URL. Unknown commands can start a discovery
+phase; the form itself does not run the agent or enforce readiness.
+
 When the conversation already carries the context, the prompt shrinks to almost nothing. All of these are enough:
 
 ```text
