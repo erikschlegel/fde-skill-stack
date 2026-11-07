@@ -25,8 +25,11 @@ async function fixture(t) {
 test("root installation and native distributions preserve bundled components and license", () => {
   const manifest = JSON.parse(text("plugin.json"));
   assert.equal(manifest.name, "pstack");
+  const { logo } = JSON.parse(text(".cursor-plugin/plugin.json"));
+  const logoBytes = readFileSync(join(root, logo));
   for (const client of ["cursor", "claude-code"]) {
     const base = `dist/${client}`;
+    assert.deepEqual(readFileSync(join(root, base, logo)), logoBytes);
     assert.equal(text(`${base}/LICENSE`), text("LICENSE"));
     assert.equal(text(`${base}/config/defaults.json`), text("config/defaults.json"));
     for (const skill of readdirSync(join(root, "skills"))) {
